@@ -85,7 +85,7 @@
         var menuItem = {
         	parent: notifyMenu,
         	path: 'pushNotifications/notifications',
-        	icon: 'fa fa-comment',
+        	icon: 'fa fa-bell-o',
         	title: data.title,
         	priority: 2,
         	permission: '',
@@ -106,14 +106,6 @@
         notifyMenu.incremented = true;
     });
 
-   function innerNotification(notification) {
-
-        //Group notification by text
-        notifications.upsert(notification, function (data, status, headers, config) {
-        }, function (error) {
-        });
-    };
-
     function markAllAsRead() {
         notifications.markAllAsRead(null, function (data, status, headers, config) {
         	var notifyMenu = mainMenuService.findByPath('pushNotifications');
@@ -132,7 +124,7 @@
                 if (!angular.isDefined(notifyMenu)) {
                     notifyMenu = {
                     	path: 'pushNotifications',
-                        icon: 'fa fa-comments',
+                        icon: 'fa fa-bell-o',
                         title: 'Notifications',
                         priority: 2,
                         permission: '',
@@ -150,23 +142,7 @@
                 this.running = true;
             };
         },
-        running: false,
-        error: function (notification) {
-            notification.notifyType = 'error';
-            return innerNotification(notification);
-        },
-        warning: function (notification) {
-            notification.notifyType = 'warning';
-            return innerNotification(notification);
-        },
-        info: function (notification) {
-            notification.notifyType = 'info';
-            return innerNotification(notification);
-        },
-    	task: function (notification) {
-    		notification.notifyType = 'CatalogExport';
-    	return innerNotification(notification);
-    }
+        running: false
     };
     return retVal;
 
